@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cats API</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
+    <!--<script type="text/javascript" src="js/main.js"></script>-->
+    <script type="text/javascript" src="controllers/cats.js"></script>
+
+</head>
+<body class="row" ng-app="cats" ng-controller="CatsCtrl">
+<div class="col-sm-12 col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2 well">
+    <div class="well row mb-lg" ng-repeat="(catIndex, cat) in cats track by $index">
+        <div class = "col-sm-6 col-md-4">
+            <img src="https://i.ytimg.com/vi/32rG4SKO1_s/maxresdefault.jpg" class = "imglist">
+            <br><br>
+            <div class="text-center">
+                <span class="btn btn-sm btn-warning" ng-click="cat.edit=!cat.edit">
+                    <span ng-if="!cat.edit">Edit</span>
+                    <span ng-if="cat.edit">Cancel</span>
+                </span>
+                <span class="btn btn-sm btn-danger" ng-click="deleteCat(catIndex, cat)">Delete</span>
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-8" ng-if="!cat.edit">
+            <b>{{ cat.name }}</b>
+            <div>
+                <span>Gender: </span> <b>{{ cat.gender }}</b><br>
+                <span>Age: </span> <b>{{ cat.age }}</b>
+            </div>
+            <div>
+                <span>Color: </span> <b>{{ cat.color }}</b><br>
+                <span>Photos: </span>
+            </div>
+        </div>
+        <div class="col-sm-6 col-md-8 form-validate" ng-if="cat.edit">
+            <div ng-class="{'has-error': editSubmitted && !cat.name }">
+                <input type="text" class="form-control" placeholder="Введите имя.." ng-model="cat.name"><br>
+            </div>
+            <div ng-class="{'has-error': editSubmitted && !cat.gender }">
+                <select ng-model="cat.gender" class="form-control">
+                    <option value="">Выбрать пол..</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                </select>
+                <br>
+            </div>
+            <div ng-class="{'has-error': editSubmitted && !cat.age }">
+                <input type="text" class="form-control" placeholder="Введите возраст.." ng-model="cat.age"><br>
+            </div>
+            <div ng-class="{'has-error': editSubmitted && !cat.color }">
+                <input type="text" class="form-control" placeholder="Введите цвет.." ng-model="cat.color"><br>
+            </div>
+            <div class="text-center">
+                <button ng-click="editSubmitted=true;editCat(cat);" type="submit" class="btn btn-success btn-lg">Сохранить</button>
+            </div>
+        </div>
+    </div>
+    <form name="addForm" role="addForm" class="well row mb-lg form-validate">
+        <div class = "col-sm-6 col-md-4">
+            <img src="https://i.ytimg.com/vi/32rG4SKO1_s/maxresdefault.jpg" class = "imglist">
+            <br><br>
+            <div class="text-center"></div>
+        </div>
+        <div class="col-sm-6 col-md-8">
+            <div ng-class="{'has-error': submitted && addForm.name.$error.required }">
+                <input name="name" required="required" type="text" class="form-control" placeholder="Введите имя.." ng-model="newCat.name"><br>
+            </div>
+            <div ng-class="{'has-error': submitted && addForm.gender.$error.required }">
+                <select name="gender" ng-model="newCat.gender" class="form-control" required="required">
+                    <option value="">Выбрать пол..</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                </select>
+                <br>
+            </div>
+            <div ng-class="{'has-error': submitted && addForm.age.$error.required }">
+                <input name="age" required="required" type="text" class="form-control" placeholder="Введите возраст.." ng-model="newCat.age"><br>
+            </div>
+            <div ng-class="{'has-error': submitted && addForm.color.$error.required }">
+                <input name="color" required="required" type="text" class="form-control" placeholder="Введите цвет.." ng-model="newCat.color"><br>
+            </div>
+        </div>
+        <div class="col-sm-12 text-center">
+            <button ng-click="submitted=true;addCat(newCat);" type="submit" class="btn btn-success btn-lg">Сохранить</button>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>
