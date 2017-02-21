@@ -1,9 +1,9 @@
 {
-    "name": "NodeAPI",
-    "version": "0.1.0",
-    "author": "Evgeny Aleksandrov",
-    "description": "simple example of RESTful API with Node.js",
-    "private": true,
+    "name": "CatsAPI",
+    "version": "0.1.1",
+    "author": "Denis Mishchuk",
+    "description": "cats app",
+    "private": false,
     "scripts": {
         "start": "node ./server.js"
     },
