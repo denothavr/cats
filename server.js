@@ -49,7 +49,7 @@ app.post('/api/cats', function(req, res) {
         gender: req.body.gender,
         age: req.body.age,
         color: req.body.color,
-        images: req.body.images
+        image: req.body.image
     });
 
     cat.save(function (err) {
@@ -97,7 +97,7 @@ app.put('/api/cats/:id', function (req, res){
         cat.gender = req.body.gender;
         cat.age = req.body.age;
         cat.color = req.body.color;
-        cat.images = req.body.images;
+        cat.image = req.body.image;
         return cat.save(function (err) {
             if (!err) {
                 log.info("cat updated");

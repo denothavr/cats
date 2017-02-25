@@ -14,23 +14,13 @@ db.once('open', function callback () {
 
 var Schema = mongoose.Schema;
 
-// Schemas
-
-var Images = new Schema({
-    kind: {
-        type: String,
-        enum: ['thumbnail', 'detail'],
-        required: true
-    },
-    url: { type: String, required: true }
-});
 
 var Cat = new Schema({
     name: { type: String, required: true },
     gender: { type: String, required: true },
     age: { type: Number, required: true } ,
     color: { type: String, required: true },
-    images: { type: String, required: false },
+    image:  { type: String, required: false },
     modified: { type: Date, default: Date.now }
 });
 

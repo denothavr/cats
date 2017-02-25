@@ -43,7 +43,8 @@ app.controller('CatsCtrl', function($scope, $http) {
                         name: cat.name,
                         gender: cat.gender,
                         age: cat.age,
-                        color: cat.color
+                        color: cat.color,
+                        image: cat.image || ''
                     }
                 }).then(function(response) {
                     $scope.cats.push(response.data.cat);
@@ -55,7 +56,7 @@ app.controller('CatsCtrl', function($scope, $http) {
             }
         };
 
-        $scope.editCat = function(cat) {
+        $scope.editCat = function(cat, backupCat,catIndex) {
             if(cat.age && cat.name && cat.gender && cat.color) {
                 $http({
                     url: '/api/cats/' + cat._id,
@@ -64,17 +65,26 @@ app.controller('CatsCtrl', function($scope, $http) {
                         name: cat.name,
                         gender: cat.gender,
                         age: cat.age,
-                        color: cat.color
+                        color: cat.color,
+                        image: cat.image || ''
                     }
                 }).then(function(response) {
-                    console.log(response.data);
+                    console.log(backupCat);
+                    var newCat = response.data.cat
+                    console.log($scope.cats[catIndex]);
+                    $scope.cats[catIndex] = angular.copy(newCat);
                     $scope.editSubmitted = false;
-                    cat.edit = false;
+                    $scope.cats[catIndex].edit = false;
                 }, function(responseError) {
                     alert('Не удалось отредактировать кота');
                 });
             }
         };
+
+        $scope.editCatFlag = function(cat) {
+            $scope.editedCat = angular.copy(cat);
+            cat.edit = !cat.edit;
+        }
     }
 
 });

@@ -19,10 +19,10 @@
 <div class="col-sm-12 col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2 well">
     <div class="well row mb-lg" ng-repeat="(catIndex, cat) in cats track by $index">
         <div class = "col-sm-6 col-md-4">
-            <img src="https://i.ytimg.com/vi/32rG4SKO1_s/maxresdefault.jpg" class = "imglist">
+            <img ng-src="{{ cat.image || 'photos/no-photo.png' }}" class = "imglist">
             <br><br>
             <div class="text-center">
-                <span class="btn btn-sm btn-warning" ng-click="cat.edit=!cat.edit">
+                <span class="btn btn-sm btn-warning" ng-click="editCatFlag(cat)">
                     <span ng-if="!cat.edit">Edit</span>
                     <span ng-if="cat.edit">Cancel</span>
                 </span>
@@ -37,35 +37,39 @@
             </div>
             <div>
                 <span>Color: </span> <b>{{ cat.color }}</b><br>
-                <span>Photos: </span>
             </div>
         </div>
         <div class="col-sm-6 col-md-8 form-validate" ng-if="cat.edit">
-            <div ng-class="{'has-error': editSubmitted && !cat.name }">
-                <input type="text" class="form-control" placeholder="Введите имя.." ng-model="cat.name"><br>
+            <div ng-class="{'has-error': editSubmitted && !editedCat.name }">
+                <input type="text" class="form-control" placeholder="Введите имя.." ng-model="editedCat.name"><br>
             </div>
-            <div ng-class="{'has-error': editSubmitted && !cat.gender }">
-                <select ng-model="cat.gender" class="form-control">
+            <div ng-class="{'has-error': editSubmitted && !editedCat.gender }">
+                <select ng-model="editedCat.gender" class="form-control">
                     <option value="">Выбрать пол..</option>
                     <option value="male">Male</option>
                     <option value="female">Female</option>
                 </select>
                 <br>
             </div>
-            <div ng-class="{'has-error': editSubmitted && !cat.age }">
-                <input type="text" class="form-control" placeholder="Введите возраст.." ng-model="cat.age"><br>
+            <div ng-class="{'has-error': editSubmitted && !editedCat.age }">
+                <input type="text" class="form-control" placeholder="Введите возраст.." ng-model="editedCat.age"><br>
             </div>
-            <div ng-class="{'has-error': editSubmitted && !cat.color }">
-                <input type="text" class="form-control" placeholder="Введите цвет.." ng-model="cat.color"><br>
+            <div ng-class="{'has-error': editSubmitted && !editedCat.color }">
+                <input type="text" class="form-control" placeholder="Введите цвет.." ng-model="editedCat.color"><br>
             </div>
+            <div>
+                <input ng-model="editedCat.image" type="text" class="form-control" placeholder="Ссылка на фото..">
+            </div>
+            <br>
             <div class="text-center">
-                <button ng-click="editSubmitted=true;editCat(cat);" type="submit" class="btn btn-success btn-lg">Сохранить</button>
+                <button ng-click="cat.edit=false;" class="btn btn-default btn-md">Отмена</button>
+                <button ng-click="editSubmitted=true;editCat(editedCat, cat, catIndex);" type="submit" class="btn btn-success btn-md">Сохранить</button>
             </div>
         </div>
     </div>
     <form name="addForm" role="addForm" class="well row mb-lg form-validate">
         <div class = "col-sm-6 col-md-4">
-            <img src="https://i.ytimg.com/vi/32rG4SKO1_s/maxresdefault.jpg" class = "imglist">
+            <img src="{{ newCat.image || 'photos/no-photo.png' }}" class = "imglist">
             <br><br>
             <div class="text-center"></div>
         </div>
@@ -87,6 +91,10 @@
             <div ng-class="{'has-error': submitted && addForm.color.$error.required }">
                 <input name="color" required="required" type="text" class="form-control" placeholder="Введите цвет.." ng-model="newCat.color"><br>
             </div>
+            <div>
+                <input ng-model="newCat.image" type="text" class="form-control" placeholder="Ссылка на фото..">
+            </div>
+            <br/>
         </div>
         <div class="col-sm-12 text-center">
             <button ng-click="submitted=true;addCat(newCat);" type="submit" class="btn btn-success btn-lg">Сохранить</button>
