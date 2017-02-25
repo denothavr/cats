@@ -30,7 +30,7 @@ var Cat = new Schema({
     gender: { type: String, required: true },
     age: { type: Number, required: true } ,
     color: { type: String, required: true },
-    images: [Images],
+    images: { type: String, required: false },
     modified: { type: Date, default: Date.now }
 });
 
