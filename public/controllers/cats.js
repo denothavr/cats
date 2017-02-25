@@ -6,6 +6,7 @@ app.controller('CatsCtrl', function($scope, $http) {
     $scope.newCat = {};
     $scope.submitted = false;
     $scope.editSubmitted = false;
+    $scope.search = '';
 
     activate();
 
