@@ -26,12 +26,7 @@ app.use(function(err, req, res, next){
     return;
 });
 
-app.get('/api', function (req, res) {
-    res.send('API is running');
-});
-
 app.get('/api/cats', function(req, res) {
-    console.log('I am here');
     return CatModel.find(function (err, cat) {
         if (!err) {
             return res.send(cat);
@@ -133,10 +128,6 @@ app.delete('/api/cats/:id', function (req, res){
             }
         });
     });
-});
-
-app.get('/ErrorExample', function(req, res, next){
-    next(new Error('Random error!'));
 });
 
 app.listen(config.get('port'), function(){
